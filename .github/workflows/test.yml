@@ -1,0 +1,29 @@
+on: [pull_request]
+
+jobs:
+  test-integration:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
+
+    steps:
+      - uses: actions/checkout@v2.3.2
+      - uses: actions/setup-node@v2.1.1
+        with:
+          node-version: '12.x'
+      - run: yarn --frozen-lockfile
+      - run: yarn test
+  lint-commits:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
+
+    steps:
+      - uses: actions/checkout@v2.3.2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2.1.1
+        with:
+          node-version: '12.x'
+      - run: yarn --frozen-lockfile
+      - run: yarn ci:lint-commits
+        env:
+          COMMITS_NUMBER: ${{ github.event.pull_request.commits }}
