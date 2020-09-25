@@ -6,7 +6,7 @@ jobs:
     if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
 
     steps:
-      - uses: actions/checkout@v2.3.2
+      - uses: actions/checkout@v2.3.3
       - uses: actions/setup-node@v2.1.1
         with:
           node-version: '12.x'
@@ -17,7 +17,7 @@ jobs:
     if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
 
     steps:
-      - uses: actions/checkout@v2.3.2
+      - uses: actions/checkout@v2.3.3
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v2.1.1
