@@ -1,1 +1,3 @@
-export const throwFunc = (message: string) => { throw new Error(message) };
+export const throwFunc = (message: string) => {
+    throw new Error(message);
+};
