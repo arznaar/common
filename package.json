@@ -10,6 +10,7 @@
     "test:lint": "eslint ./src --ext .ts,.js,.tsx,.jsx",
     "test:lint-config": "eslint --ext .ts --print-config ./src/unique.ts",
     "publish": "tsc && semantic-release",
+    "ci:build": "tsc",
     "ci:lint-commits": "commitlint --from HEAD~$COMMITS_NUMBER --to HEAD --verbose"
   },
   "main": "./src/index",
