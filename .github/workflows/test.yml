@@ -43,6 +43,6 @@ jobs:
         languages: ${{ matrix.language }}
 
     - run: yarn --frozen-lockfile
-    - run: yarn build
+    - run: yarn run build
 
     - uses: github/codeql-action/analyze@v1
