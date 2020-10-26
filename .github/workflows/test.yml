@@ -27,3 +27,22 @@ jobs:
       - run: yarn ci:lint-commits
         env:
           COMMITS_NUMBER: ${{ github.event.pull_request.commits }}
+  analyze:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['javascript']
+
+    steps:
+    - uses: actions/checkout@v2.3.3
+
+    - uses: github/codeql-action/init@v1
+      with:
+        languages: ${{ matrix.language }}
+
+    - run: yarn --frozen-lockfile
+    - run: yarn build
+
+    - uses: github/codeql-action/analyze@v1
