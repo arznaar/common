@@ -30,7 +30,7 @@ export const exec = async (
         throwOnError: boolean;
         isErrorInStdOut: (data: string) => boolean;
         cwd: string;
-    }>,
+    }>
 ) => {
     const [runner, args] = splitForSpawn(command);
     const newProcess = spawn(runner, args, { shell: true, cwd: options?.cwd });

@@ -1,3 +1,3 @@
-module.exports = {
-    branches: ["develop"]
-};
+const config = require("./configs/release.config");
+
+module.exports = config;
