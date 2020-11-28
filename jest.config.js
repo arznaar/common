@@ -1,15 +1,3 @@
-module.exports = {
-    clearMocks: true,
-    testEnvironment: "node",
-    testMatch: [
-        "**/?(*.)+(test).ts?(x)",
-    ],
+const config = require("./configs/jest.config");
 
-    collectCoverage: true,
-    collectCoverageFrom: [
-        "src/**/*.js",
-        "!src/**/*.test.js",
-    ],
-    coverageDirectory: "coverage",
-    coverageReporters: ["lcov"],
-};
+module.exports = config;

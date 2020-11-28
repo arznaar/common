@@ -1,12 +1,3 @@
-module.exports = {
-    printWidth: 120,
-    tabWidth: 4,
-    tabs: false,
-    semi: true,
-    singleQuote: false,
-    quoteProps: 'as-needed',
-    tailingComma: 'all',
-    bracketSpacing: true,
-    jsxBracketSameLine: false,
-    arrowParens: 'always'
-};
+const config = require("./configs/prettierrc");
+
+module.exports = config;

@@ -5,5 +5,7 @@
     "settings": {
         "terminal.integrated.shell.linux": null
     },
-    "extensions": []
+    "extensions": [
+        "dbaeumer.vscode-eslint"
+    ]
 }
