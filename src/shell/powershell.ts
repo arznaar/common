@@ -12,7 +12,7 @@ export const openPowershellWithCommand = async (
     command: string,
     options?: Partial<{
         asAdmin: boolean;
-    }>,
+    }>
 ) => {
     const escapedCommand = [
         "Start-Process PowerShell",

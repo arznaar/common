@@ -36,13 +36,13 @@ export const dropDatabase = async (
     name: string,
     params: {
         noCheck?: boolean;
-    } = {},
+    } = {}
 ) => {
     await query(
         database,
         params.noCheck
             ? `DROP DATABASE [${name}]`
-            : `IF EXISTS (SELECT name FROM sys.databases WHERE name = N'${name}') DROP DATABASE [${name}]`,
+            : `IF EXISTS (SELECT name FROM sys.databases WHERE name = N'${name}') DROP DATABASE [${name}]`
     );
 };
 
@@ -53,6 +53,6 @@ export const getAllDatabases = async (database: string) => {
             "SELECT name",
             "FROM sys.databases",
             "WHERE name NOT IN ('master' ,'tempdb' ,'model' ,'msdb' ,'ReportServer' ,'ReportServerTempDB')",
-        ].join(" "),
+        ].join(" ")
     );
 };
