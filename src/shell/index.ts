@@ -53,7 +53,7 @@ export const exec = async (
         });
     });
 
-    await new Promise((res, rej) => {
+    await new Promise<void>((res, rej) => {
         const onClose = () => {
             if (logs.some((x) => x.isError)) {
                 rej(new Error(`Command failed with logs:\n${logs.map((x) => x.value).join("\n")}`));

@@ -16,8 +16,8 @@ jobs:
       - uses: actions/setup-node@v2.1.2
         with:
           node-version: '12.x'
-      - run: yarn --frozen-lockfile
-      - run: yarn test
+      - run: npm ci
+      - run: npm run test
   lint-commits:
     runs-on: ubuntu-latest
     if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
@@ -29,8 +29,8 @@ jobs:
       - uses: actions/setup-node@v2.1.2
         with:
           node-version: '12.x'
-      - run: yarn --frozen-lockfile
-      - run: yarn ci:lint-commits
+      - run: npm ci
+      - run: npm run ci:lint-commits
         env:
           COMMITS_NUMBER: ${{ github.event.pull_request.commits }}
   analyze:
@@ -48,7 +48,7 @@ jobs:
       with:
         languages: ${{ matrix.language }}
 
-    - run: yarn --frozen-lockfile
-    - run: yarn run ci:build
+    - run: npm ci
+    - run: npm run ci:build
 
     - uses: github/codeql-action/analyze@v1
