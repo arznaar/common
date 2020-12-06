@@ -8,7 +8,6 @@ module.exports = function (api) {
     const plugins = [
         // optimizes lodash as it highly popular
         "lodash",
-        "@babel/plugin-proposal-optional-chaining",
     ];
 
     return {
