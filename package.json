@@ -22,7 +22,7 @@
     "@babel/preset-typescript": "*",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "*",
-    "@types/jest": "^26.0.16",
+    "@types/jest": "^26.0.19",
     "@types/node": "^14.14.10",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
