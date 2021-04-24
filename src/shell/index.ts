@@ -75,7 +75,7 @@ export const exec = async (
         });
 
         newProcess.on("close", (code) => {
-            if (code !== 0) {
+            if (code !== 0 && code !== null) {
                 logs.push({
                     isError: true,
                     value: `Command failed with error code ${code}`,
