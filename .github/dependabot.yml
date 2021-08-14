@@ -8,8 +8,6 @@ updates:
   commit-message:
     prefix: "fix(deps):"
   open-pull-requests-limit: 20
-  reviewers:
-    - "arznaar"
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
@@ -18,5 +16,3 @@ updates:
   commit-message:
     prefix: "fix(deps):"
   open-pull-requests-limit: 20
-  reviewers:
-    - "arznaar"
