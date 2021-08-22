@@ -13,9 +13,10 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
+            console.log({ context, repo: context.repo });
             const { owner, repo } = context.repo;
+            console.log({ owner, repo });
             const pulls = await github.rest.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
-            console.log({ owner repo });
             console.log(pulls);
             const openAutomergePrs = pulls.some((x) => x.auto_merge !== null));
             if (openAutomergePrs) { return; }
