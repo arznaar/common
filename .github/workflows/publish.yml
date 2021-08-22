@@ -21,14 +21,14 @@ jobs:
             const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
             return pulls.some((x) => x.auto_merge !== null);
       - uses: actions/setup-node@v2.4.0
-        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != true }}
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
         with:
           node-version: 'lts/*'
           cache: 'npm'
       - run: npm ci
-        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != true }}
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
       - run: npm run publish
-        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != true }}
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
         env:
           NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
