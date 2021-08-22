@@ -18,6 +18,7 @@ jobs:
             const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
             console.log(pulls);
             const openAutoMergePrs = pulls.some((x) => x.auto_merge !== null);
+            console.log({ openAutoMergePrs });
             if (openAutoMergePrs) { return; }
             github.actions.createWorkflowDispatch({
               owner,
