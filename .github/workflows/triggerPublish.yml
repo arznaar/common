@@ -19,9 +19,10 @@ jobs:
             const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
             const openAutoMergePrs = pulls.some((x) => x.auto_merge !== null);
             if (openAutoMergePrs) { return; }
-            github.actions.createWorkflowDispatch({
+            const res = await github.actions.createWorkflowDispatch({
               owner,
               repo,
               workflow_id: '.github/workflows/publish.yml',
               ref: 'refs/heads/develop',
             });
+            console.log(res);
