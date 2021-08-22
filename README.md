@@ -1,5 +1,4 @@
 # @arznaar/common
-1
 
 Personal collection of configs, docs and reused code. It's public only to play with github's apiblic repos features.
 It's highly biased and I recommend to use it only as reference.
