@@ -13,14 +13,13 @@ jobs:
       - uses: actions/github-script@v4
         with:
           script: |
-            console.log({ context, repo: context.repo });
             const { owner, repo } = context.repo;
-            console.log({ owner, repo });
-            const pulls = await github.rest.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
+            console.log("before rest1");
+            const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
             console.log(pulls);
             const openAutoMergePrs = pulls.some((x) => x.auto_merge !== null);
             if (openAutoMergePrs) { return; }
-            github.rest.actions.createWorkflowDispatch({
+            github.actions.createWorkflowDispatch({
               owner,
               repo,
               workflow_id: '.github/workflows/publish.yml',
