@@ -5,6 +5,8 @@ on:
   #     - develop
   workflow_dispatch
 
+concurrency: triggerPublish
+
 jobs:
   trigger_on_merge:
     # if: github.event.pull_request.merged == true
@@ -14,11 +16,8 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            console.log("before rest1");
             const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
-            console.log(pulls);
             const openAutoMergePrs = pulls.some((x) => x.auto_merge !== null);
-            console.log({ openAutoMergePrs });
             if (openAutoMergePrs) { return; }
             github.actions.createWorkflowDispatch({
               owner,

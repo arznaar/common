@@ -1,6 +1,8 @@
 on:
   workflow_dispatch
 
+concurrency: publish
+
 jobs:
   publish:
     runs-on: ubuntu-latest
