@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: actions/github-script@v4
-        if: ${{ github.event_name == 'pull_request_target' }}
+        if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request_target.merged == true }}
         id: has_pending_automerge
         with:
           script: |
