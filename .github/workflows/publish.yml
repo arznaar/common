@@ -1,5 +1,10 @@
 on:
-  workflow_dispatch
+  workflow_dispatch:
+  pull_request_target:
+    branches: [ develop ]
+    types: [ closed ]
+
+concurrency: publish
 
 jobs:
   publish:
@@ -7,12 +12,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.3.4
+      - uses: actions/github-script@v4
+        if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request_target.merged == true }}
+        id: has_pending_automerge
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
+            return pulls.some((x) => x.auto_merge !== null);
       - uses: actions/setup-node@v2.4.0
+        if: ${{ steps.has_pending_automerge.outputs != true }}
         with:
           node-version: 'lts/*'
           cache: 'npm'
       - run: npm ci
+        if: ${{ steps.has_pending_automerge.outputs != true }}
       - run: npm run publish
+        if: ${{ steps.has_pending_automerge.outputs != true }}
         env:
           NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
