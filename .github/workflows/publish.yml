@@ -1,6 +1,6 @@
 on:
   workflow_dispatch:
-  pull_request_target:
+  pull_request:
     branches: [ develop ]
     types: [ closed ]
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: actions/github-script@v4
-        if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request_target.merged == true }}
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true }}
         id: has_pending_automerge
         with:
           script: |
@@ -21,14 +21,14 @@ jobs:
             const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
             return pulls.some((x) => x.auto_merge !== null);
       - uses: actions/setup-node@v2.4.0
-        if: ${{ github.event_name != 'pull_request_target' || steps.has_pending_automerge.outputs != true }}
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != true }}
         with:
           node-version: 'lts/*'
           cache: 'npm'
       - run: npm ci
-        if: ${{ github.event_name != 'pull_request_target' || steps.has_pending_automerge.outputs != true }}
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != true }}
       - run: npm run publish
-        if: ${{ github.event_name != 'pull_request_target' || steps.has_pending_automerge.outputs != true }}
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != true }}
         env:
           NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
