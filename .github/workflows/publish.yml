@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: actions/github-script@v4
+      - uses: actions/github-script@v5
         if: ${{ github.event_name == 'pull_request' }}
         id: has_pending_automerge
         with:
