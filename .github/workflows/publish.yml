@@ -19,7 +19,7 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const pulls = await github.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
+            const pulls = await github.rest.pulls.list({ owner, repo, state: 'open' }).then((x) => x.data);
             return pulls.some((x) => x.auto_merge !== null);
       - uses: actions/setup-node@v2.4.1
         if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
