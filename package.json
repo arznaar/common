@@ -18,7 +18,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
     "@babel/preset-typescript": "^7.16.7",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
@@ -35,7 +35,7 @@
     "typescript": "^4.5.4"
   },
   "peerDependencies": {
-    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-env": "^7.16.8",
     "@babel/preset-typescript": "^7.16.7",
     "@commitlint/config-conventional": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
