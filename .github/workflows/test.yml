@@ -10,7 +10,7 @@ jobs:
     if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
 
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
@@ -22,7 +22,7 @@ jobs:
     if: "!contains(github.event.pull_request.labels.*.name, 'WIP')"
 
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v3
@@ -42,7 +42,7 @@ jobs:
         language: ['javascript']
 
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3
 
     - uses: github/codeql-action/init@v1
       with:
