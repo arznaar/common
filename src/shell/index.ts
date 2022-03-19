@@ -7,7 +7,7 @@ const splitForSpawn = (command: string): [string, string[]] => {
     return firstSpace !== -1 ? [trimmed.slice(0, firstSpace), [trimmed.slice(firstSpace + 1)]] : [trimmed, []];
 };
 
-const transformChunk = (data: string | Buffer) => {
+const transformChunk = (data: { toString: () => string }) => {
     const result = data
         .toString()
         .split(EOL)
@@ -15,6 +15,14 @@ const transformChunk = (data: string | Buffer) => {
         .join("\n");
     return result[result.length - 1] === "\n" ? result.slice(0, -1) : result;
 };
+
+const hasSafeAccess = (x: unknown): x is Record<string | number | symbol, unknown> =>
+    typeof x !== "undefined"
+    && x !== null;
+
+const hasToString = (x: unknown): x is { toString: () => string } =>
+    hasSafeAccess(x)
+    && typeof x?.toString === "function";
 
 /**
  * exec wrapped in promise to programmatically getting the results. If you want to pipe logs - it's better to use
@@ -39,6 +47,9 @@ export const exec = async (
         value: string;
     }> = [];
     newProcess.stdout.on("data", (data) => {
+        if (!hasToString(data)) {
+            return;
+        }
         const dataText = transformChunk(data);
         logs.push({
             isError: !!options?.isErrorInStdOut?.(dataText),
@@ -47,6 +58,9 @@ export const exec = async (
     });
 
     newProcess.stderr.on("data", (data) => {
+        if (!hasToString(data)) {
+            return;
+        }
         logs.push({
             isError: !!options?.throwOnError,
             value: transformChunk(data),
