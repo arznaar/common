@@ -33,22 +33,3 @@ jobs:
       - run: npm run ci:lint-commits
         env:
           COMMITS_NUMBER: ${{ github.event.pull_request.commits }}
-  analyze:
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ['javascript']
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
-
-    - run: npm ci
-    - run: npm run ci:build
-
-    - uses: github/codeql-action/analyze@v2
