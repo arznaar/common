@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
       - run: npm ci
         if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
       - run: npm run publish
