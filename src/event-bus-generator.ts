@@ -20,7 +20,7 @@ export const createEventBus = <Events extends { [event: string]: unknown }>(opti
             await Promise.all(handlers.map((x) => Promise.resolve(x(payload))));
         } else {
             for (const handler of handlers) {
-                await handler(payload);
+                await Promise.resolve(handler(payload));
             }
         }
     };
