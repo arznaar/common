@@ -33,7 +33,7 @@ function execCommand(command, options = {}) {
 
 function getPreviousTag() {
   // Get the most recent tag
-  const tag = execCommand('git describe --tags --abbrev=0 2>/dev/null || echo ""', { allowError: true });
+  const tag = execCommand('git describe --tags --abbrev=0', { allowError: true });
   
   if (!tag) {
     console.log('No previous tag found, starting from v0.0.0');
@@ -87,6 +87,23 @@ function formatVersion(version) {
   return `v${version.major}.${version.minor}.${version.patch}`;
 }
 
+function validateTag(tag) {
+  // Validate tag format to prevent command injection
+  // Only allow semantic version format: v1.2.3 or 1.2.3
+  if (!/^v?\d+\.\d+\.\d+$/.test(tag)) {
+    throw new Error(`Invalid tag format: ${tag}. Only semantic version tags are allowed (e.g., v1.2.3)`);
+  }
+  return tag;
+}
+
+function validatePRNumber(prNumber) {
+  // Validate PR number to prevent command injection
+  if (!/^\d+$/.test(prNumber)) {
+    throw new Error(`Invalid PR number: ${prNumber}. Only numeric values are allowed`);
+  }
+  return prNumber;
+}
+
 function getMergedPRsSinceTag(tag) {
   let commits;
   
@@ -94,8 +111,10 @@ function getMergedPRsSinceTag(tag) {
     // Get all commits if no previous tag
     commits = execCommand('git log --oneline --no-decorate');
   } else {
+    // Validate tag before using it in command
+    const validatedTag = validateTag(tag);
     // Get commits since the tag
-    commits = execCommand(`git log ${tag}..HEAD --oneline --no-decorate`, { allowError: true });
+    commits = execCommand(`git log ${validatedTag}..HEAD --oneline --no-decorate`, { allowError: true });
   }
   
   if (!commits) {
@@ -120,8 +139,10 @@ function getMergedPRsSinceTag(tag) {
 
 function getPRLabels(prNumber) {
   try {
+    // Validate PR number before using it in command
+    const validatedPRNumber = validatePRNumber(prNumber);
     // Use GitHub CLI if available
-    const labels = execCommand(`gh pr view ${prNumber} --json labels --jq '.labels[].name'`, { allowError: true });
+    const labels = execCommand(`gh pr view ${validatedPRNumber} --json labels --jq '.labels[].name'`, { allowError: true });
     
     if (labels) {
       return labels.split('\n').filter(l => l.trim());
@@ -174,18 +195,21 @@ function determineVersionBump(prNumbers) {
 function createAndPushTag(tag, dryRun = false) {
   console.log(`\nCreating tag: ${tag}`);
   
+  // Validate tag before using it in commands
+  const validatedTag = validateTag(tag);
+  
   if (dryRun) {
-    console.log('[DRY RUN] Would create and push tag:', tag);
+    console.log('[DRY RUN] Would create and push tag:', validatedTag);
     return;
   }
   
   // Create annotated tag
-  execCommand(`git tag -a ${tag} -m "Release ${tag}"`);
-  console.log(`Tag ${tag} created successfully`);
+  execCommand(`git tag -a ${validatedTag} -m "Release ${validatedTag}"`);
+  console.log(`Tag ${validatedTag} created successfully`);
   
   // Push tag to remote
-  execCommand(`git push origin ${tag}`);
-  console.log(`Tag ${tag} pushed to remote`);
+  execCommand(`git push origin ${validatedTag}`);
+  console.log(`Tag ${validatedTag} pushed to remote`);
 }
 
 function main() {
