@@ -17,7 +17,7 @@ export const createEventBus = <Events extends { [event: string]: unknown }>(opti
         }
 
         if (options?.parallelExecution) {
-            await Promise.all(handlers.map((x) => x(payload)));
+            await Promise.all(handlers.map((x) => Promise.resolve(x(payload))));
         } else {
             for (const handler of handlers) {
                 await handler(payload);

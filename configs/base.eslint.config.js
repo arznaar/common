@@ -3,6 +3,8 @@ const tsParser = require("@typescript-eslint/parser");
 const importPlugin = require("eslint-plugin-import");
 
 module.exports = [
+    ...typescriptEslint.configs["flat/recommended"],
+    ...typescriptEslint.configs["flat/recommended-type-checked"],
     {
         files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
         languageOptions: {
@@ -13,13 +15,12 @@ module.exports = [
             },
         },
         plugins: {
-            "@typescript-eslint": typescriptEslint,
             "import": importPlugin,
         },
+        linterOptions: {
+            reportUnusedDisableDirectives: true,
+        },
         rules: {
-            ...typescriptEslint.configs["flat/recommended"].rules,
-            ...typescriptEslint.configs["flat/recommended-type-checked"].rules,
-
             // I strongly believe that types should be inferred when possible
             "@typescript-eslint/explicit-module-boundary-types": "off",
 
