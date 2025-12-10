@@ -46,19 +46,10 @@ module.exports = tseslint.config(
             "import/newline-after-import": "error",
 
             // Custom rules from original config
-            // I strongly believe that types should be inferred when possible
             "@typescript-eslint/explicit-module-boundary-types": "off",
-
-            // this rule is bad and just causes addition of 2 ignores instead of 1
             "@typescript-eslint/ban-ts-comment": "off",
-
-            // 120 is more readable in diffs on most screens and you can't usually break urls
             "max-len": ["error", { "code": 120, "ignoreUrls": true }],
-
-            // more than 3 items easier to read in column
             "function-paren-newline": ["error", "multiline-arguments"],
-
-            // less conflicts and easier to add new items
             "comma-dangle": ["error", {
                 "arrays": "always-multiline",
                 "objects": "always-multiline",
@@ -66,23 +57,11 @@ module.exports = tseslint.config(
                 "exports": "always-multiline",
                 "functions": "always-multiline",
             }],
-
-            // single quote is a apostrophe that is common in text
             "quotes": ["error", "double"],
-
-            // most default one
             "indent": ["error", 4],
-
-            // common invisible error
             "no-cond-assign": "error",
-
-            // better diffs and readability
             "newline-per-chained-call": "error",
-
-            // more readable
             "object-curly-spacing": ["error", "always"],
-
-            // more stable and less conflict prone
             "arrow-parens": ["error", "always"],
         },
 

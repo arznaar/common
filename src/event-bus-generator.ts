@@ -17,6 +17,7 @@ export const createEventBus = <Events extends { [event: string]: unknown }>(opti
         }
 
         if (options?.parallelExecution) {
+            // eslint-disable-next-line @typescript-eslint/await-thenable
             await Promise.all(handlers.map((x) => x(payload)));
         } else {
             for (const handler of handlers) {
