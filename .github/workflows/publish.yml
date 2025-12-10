@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history for tags
       - uses: actions/github-script@v6
         if: ${{ github.event_name == 'pull_request' }}
         id: has_pending_automerge
@@ -29,6 +31,11 @@ jobs:
           registry-url: 'https://npm.pkg.github.com'
       - run: npm ci
         if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
+      - name: Create version tag
+        if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/tag-version.js
       - run: npm run publish
         if: ${{ github.event_name != 'pull_request' || steps.has_pending_automerge.outputs.result != 'true' }}
         env:

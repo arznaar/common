@@ -10,6 +10,15 @@ It's highly biased and I recommend to use it only as reference.
 - use dev container in repo and keep it updated
 - keep package.json scripts updated and clean
 
+## Versioning
+
+This repository uses automated semantic versioning based on PR labels:
+- Add `feature` label to PRs that introduce new features (triggers minor version bump)
+- Add `breaking change` label to PRs with backward-incompatible changes (triggers major version bump)
+- All other PRs trigger a patch version bump
+
+See [.github/copilot-instructions.md](./.github/copilot-instructions.md) for detailed labeling guidelines.
+
 ## Docs
 
 - [./docs/development.md](./docs/development.md)
