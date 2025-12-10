@@ -17,8 +17,8 @@ module.exports = [
             "import": importPlugin,
         },
         rules: {
-            ...typescriptEslint.configs.recommended.rules,
-            ...typescriptEslint.configs["recommended-requiring-type-checking"].rules,
+            ...typescriptEslint.configs["flat/recommended"].rules,
+            ...typescriptEslint.configs["flat/recommended-type-checked"].rules,
 
             // I strongly believe that types should be inferred when possible
             "@typescript-eslint/explicit-module-boundary-types": "off",
