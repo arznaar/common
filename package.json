@@ -19,7 +19,7 @@
     "@types/jest": "^30.0.0",
     "@types/node": "^26.4.1",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/parser": "^8.69.0",
     "eslint": "^8.31.0",
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.5.1",
@@ -28,7 +28,7 @@
   },
   "peerDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/parser": "^8.69.0",
     "eslint-plugin-import": "^2.32.0"
   }
 }
